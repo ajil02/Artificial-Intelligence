@@ -1,0 +1,30 @@
+n = int(input("Enter the number of queens:"))
+board = [[0]*n for _ in range(n)]
+
+def attack(board, row, col, n):
+    for i in range(n):
+        if board[row][i] == 1 or board[i][col] == 1:
+            return False
+        if 0 <= row-i < n and 0 <= col-i < n and board[row-i][col-i] == 1:
+            return False
+        if 0 <= row-i < n and 0 <= col+i < n and board[row-i][col+i] == 1:
+            return False
+    return True
+
+def placing_queens(board, row, n):
+    if row >= n:
+        return True
+    for col in range(n):
+        if attack(board, row, col, n):
+            board[row][col] = 1
+            if placing_queens(board, row+1, n):
+                return True
+            board[row][col] = 0
+    return False
+
+if placing_queens(board, 0, n):
+    print("Queens placed safely at non-attacking positions:")
+    for row in board:
+        print(" ".join(map(str,row)))
+else:
+    print("No solution exists.")
