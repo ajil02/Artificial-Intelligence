@@ -1,0 +1,30 @@
+def dfs(visited, graph, node):
+    stack = [node]
+
+    while stack:
+        current_node = stack.pop()
+        if current_node not in visited:
+            print(current_node)
+            visited.add(current_node)
+            if current_node in graph:
+                for neighbor in graph[current_node]:
+                    dfs(visited,graph,neighbor)
+
+def read_graph():
+    graph = {}
+
+    num_vertices = int(input("Enter the number of vertices: "))
+
+    print("Enter the edges for each vertex in the format 'vertex:adjacent_vertex'")
+    for _ in range(num_vertices):
+        entry = input().strip().split(':')
+        vertex = entry[0].strip()
+        adjacent_vertices = [v.strip() for v in entry[1].split(',')]
+        graph[vertex] = adjacent_vertices
+
+    return graph
+
+graph = read_graph()
+visited = set()
+start = input("Enter the starting vertex: ").strip()
+dfs(visited, graph, start)
