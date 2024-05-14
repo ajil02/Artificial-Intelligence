@@ -1,0 +1,35 @@
+def bfs(graph, start):
+    visited = []
+    queue = []
+
+    queue.append(start)
+    visited.append(start)
+
+    while queue:
+        current_vertex = queue.pop(0)
+        print("", current_vertex)
+
+        for neighbor in graph[current_vertex]:
+            if neighbor not in visited:
+                visited.append(neighbor)
+                queue.append(neighbor)
+
+def read_graph():
+    graph = {}
+
+    num_vertices = int(input("Enter the number of vertices: "))
+
+    print("Enter the edges for each vertex in the format 'vertex:adjacent_vertex'")
+    for _ in range(num_vertices):
+        entry = input().strip().split(':')
+        vertex = entry[0].strip()
+        adjacent_vertices = [v.strip() for v in entry[1].split(',')]
+        graph[vertex] = adjacent_vertices
+
+    return graph
+
+graph = read_graph()
+
+start_vertex = input("Enter the start vertex:")
+print("BFS traversal starting from vertex", start_vertex)
+bfs(graph, start_vertex)
